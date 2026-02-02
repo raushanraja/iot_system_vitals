@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real-time system vitals monitoring dashboard for IoT Remote API">
+    <meta name="theme-color" content="#4ec9b0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="IoT Vitals">
+    <title>IoT Remote - System Vitals</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="title">IoT Remote API</h1>
+                <span class="subtitle">System Vitals Monitor</span>
+            </div>
+            <div class="header-right">
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Connecting...</span>
+                </div>
+                <div class="last-update">
+                    Last update: <span id="lastUpdate">--:--:--</span>
+                </div>
+                <button class="settings-button" id="settingsButton" title="Settings">
+                    <i class="fas fa-cog settings-icon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- System Overview -->
+            <section class="section">
+                <h2 class="section-title">System Overview</h2>
+                <div class="metrics-grid">
+                    <!-- CPU Card -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-bolt metric-icon"></i>
+                            <span class="metric-label">CPU Usage</span>
+                        </div>
+                        <div class="metric-value" id="cpuValue">--</div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar" id="cpuBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Memory Card -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-memory metric-icon"></i>
+                            <span class="metric-label">Memory Usage</span>
+                        </div>
+                        <div class="metric-value" id="memoryValue">--</div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar" id="memoryBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Disk Card -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-hard-drive metric-icon"></i>
+                            <span class="metric-label">Disk Usage</span>
+                        </div>
+                        <div class="metric-value" id="diskValue">--</div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar" id="diskBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Uptime Card -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-clock metric-icon"></i>
+                            <span class="metric-label">System Uptime</span>
+                        </div>
+                        <div class="metric-value" id="uptimeValue">--</div>
+                        <div class="metric-detail" id="uptimeDetail">--</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Network Stats -->
+            <section class="section">
+                <h2 class="section-title">Network Statistics</h2>
+                <div class="network-grid">
+                    <div class="network-stat">
+                        <span class="network-label"><i class="fas fa-download"></i> Received</span>
+                        <span class="network-value" id="networkRx">-- MB</span>
+                    </div>
+                    <div class="network-stat">
+                        <span class="network-label"><i class="fas fa-upload"></i> Transmitted</span>
+                        <span class="network-value" id="networkTx">-- MB</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Panel (Hidden by default) -->
+            <section class="section settings-panel" id="settingsPanel" style="display: none;">
+                <div class="settings-header">
+                    <h2 class="section-title">Settings</h2>
+                    <button class="close-button" id="closeSettings" title="Close">×</button>
+                </div>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label for="apiEndpoint" class="setting-label">API Endpoint</label>
+                        <input 
+                            type="text" 
+                            id="apiEndpoint" 
+                            class="setting-input" 
+                            value="http://localhost:3000"
+                            placeholder="http://localhost:3000"
+                        >
+                    </div>
+                    <div class="setting-item">
+                        <label for="apiKey" class="setting-label">API Key</label>
+                        <input 
+                            type="password" 
+                            id="apiKey" 
+                            class="setting-input" 
+                            placeholder="Enter your API key"
+                        >
+                    </div>
+                    <div class="setting-item">
+                        <label for="refreshInterval" class="setting-label">Refresh Interval (seconds)</label>
+                        <input 
+                            type="number" 
+                            id="refreshInterval" 
+                            class="setting-input" 
+                            value="5" 
+                            min="1" 
+                            max="60"
+                        >
+                    </div>
+                    <div class="setting-item setting-buttons">
+                        <button id="applySettings" class="button button-primary">Apply Settings</button>
+                        <button id="resetSettings" class="button button-secondary">Reset</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Error Display -->
+            <div class="error-message" id="errorMessage" style="display: none;">
+                <i class="fas fa-exclamation-triangle error-icon"></i>
+                <span class="error-text" id="errorText"></span>
+                <button class="error-close" id="errorClose">×</button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <span>IoT Remote API v1.0</span>
+    <script>
+        // Register Service Worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('[PWA] Service Worker registered:', registration.scope);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            console.log('[PWA] New service worker found, installing...');
+                            
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    console.log('[PWA] New version available! Refresh to update.');
+                                    // Optionally show a notification to the user
+                                }
+                            });
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('[PWA] Service Worker registration failed:', error);
+                    });
+            });
+        } else {
+            console.warn('[PWA] Service Workers not supported in this browser');
+        }
+    </script>
+            <span>•</span>
+            <span>System Vitals Dashboard</span>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

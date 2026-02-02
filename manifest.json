@@ -1,0 +1,26 @@
+{
+  "name": "IoT Remote System Vitals",
+  "short_name": "IoT Vitals",
+  "description": "Real-time system vitals monitoring dashboard for IoT Remote API",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e1e1e",
+  "theme_color": "#4ec9b0",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%231e1e1e'/%3E%3Cpath fill='%234ec9b0' d='M256 64c106 0 192 86 192 192s-86 192-192 192S64 362 64 256 150 64 256 64z'/%3E%3Cpath fill='%231e1e1e' d='M256 128c-71 0-128 57-128 128s57 128 128 128 128-57 128-128-57-128-128-128zm0 192c-35 0-64-29-64-64s29-64 64-64 64 29 64 64-29 64-64 64z'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%231e1e1e'/%3E%3Cpath fill='%234ec9b0' d='M256 64c106 0 192 86 192 192s-86 192-192 192S64 362 64 256 150 64 256 64z'/%3E%3Cpath fill='%231e1e1e' d='M256 128c-71 0-128 57-128 128s57 128 128 128 128-57 128-128-57-128-128-128zm0 192c-35 0-64-29-64-64s29-64 64-64 64 29 64 64-29 64-64 64z'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "productivity"],
+  "screenshots": []
+}
