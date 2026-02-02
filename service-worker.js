@@ -3,11 +3,11 @@
 
 const CACHE_NAME = 'iot-vitals-v1';
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js',
-  '/manifest.json'
+  './',
+  './index.html',
+  './styles.css',
+  './app.js',
+  './manifest.json'
 ];
 
 // External resources to cache

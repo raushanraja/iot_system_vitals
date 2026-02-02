@@ -2,7 +2,7 @@
   "name": "IoT Remote System Vitals",
   "short_name": "IoT Vitals",
   "description": "Real-time system vitals monitoring dashboard for IoT Remote API",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#1e1e1e",
   "theme_color": "#4ec9b0",
